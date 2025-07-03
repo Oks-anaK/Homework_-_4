@@ -1,32 +1,61 @@
 class Product:
     """Класс для передачи списка товаров."""
 
-    name: str
-    description: str
-    price: float
-    quantity: int
-
     def __init__(self, name, description, price, quantity):
         self.name = name
         self.description = description
-        self.price = price
+        self.price = price  # сеттер с проверкой
         self.quantity = quantity
+
+    @property
+    def price(self):
+        return self.__price  # возвращаем приватный атрибут
+
+    @price.setter
+    def price(self, new_price):
+        if new_price <= 0:
+            print("Цена не должна быть нулевая или отрицательная")
+        else:
+            self.__price = new_price
+
+    @classmethod
+    def new_product(cls, product_info):
+        # Ожидаем словарь с ключами: name, description, price, quantity
+        return cls(
+            product_info["name"],
+            product_info["description"],
+            product_info["price"],
+            product_info["quantity"],
+        )
 
 
 class Category:
     """Класс для представления товаров по категории. А также подсчета категорий и товаров."""
 
-    name: str
-    description: str
-    products: list[Product]
-
     category_count = 0
     product_count = 0
 
-    def __init__(self, name, description, products):
+    def __init__(self, name: str, description: str, products_list=None):
         self.name = name
         self.description = description
-        self.products = products if products else []
+        self.__products_list = products_list if products_list else []
 
         Category.category_count += 1
-        Category.product_count += len(self.products) if self.products else 0
+        Category.product_count += len(self.__products_list)
+
+    @property
+    def products_list(self):
+        # Возвращаем список объектов товаров
+        return self.__products_list
+
+    @property
+    def products(self):
+        # Возвращаем строку с описанием всех товаров, каждый с новой строки
+        return "".join(
+            f"{product.name}, {product.price} руб. Остаток: {product.quantity} шт.\n"
+            for product in self.__products_list
+        )
+
+    def add_product(self, product):
+        self.__products_list.append(product)
+        Category.product_count += 1

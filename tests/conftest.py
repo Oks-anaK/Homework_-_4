@@ -30,3 +30,9 @@ def category_smartphones(product_xiaomi, product_iphone):
         "Смартфоны, как средство не только коммуникации, но и получения дополнительных функций для удобства жизни",
         [product_xiaomi, product_iphone],
     )
+
+
+@pytest.fixture
+def user_product_list(product_xiaomi, product_iphone):
+    cat = Category("Смартфоны", "Описание категории", [product_xiaomi, product_iphone])
+    return cat
