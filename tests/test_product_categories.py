@@ -33,20 +33,22 @@ def test_category_counts(category_smartphones):
     assert Category.category_count == 1  # После создания одной категории
 
 
-def test_product_products_list_property(user_product_list):
+def test_product_products_list_property(category_smartphones):
     """Тест для проверки вывода списка товаров."""
     expected = (
         "Xiaomi Redmi Note 11, 31000.0 руб. Остаток: 14 шт.\n"
         "Iphone 15, 210000.0 руб. Остаток: 8 шт.\n"
     )
-    assert user_product_list.products == expected
+    assert category_smartphones.products == expected
 
 
 def test_product_str(product_xiaomi):
+    """Тест для проверки вывода строкового выражения Product."""
     assert str(product_xiaomi) == "Xiaomi Redmi Note 11, 31000.0 руб. Остаток: 14 шт."
 
 
 def test_product__add__(product_xiaomi, product_iphone):
+    """Тест для проверки расчета полной стоимости всех товаров на складе."""
     assert product_xiaomi + product_iphone == 2114000.0
 
 
@@ -92,5 +94,6 @@ def test_classmethod_new_product():
     assert product.quantity == product_info["quantity"]
 
 
-def test_category_str(user_product_list):
-    assert str(user_product_list) == "Смартфоны, количество продуктов: 22 шт."
+def test_category_str(category_smartphones):
+    """Тест для проверки вывода строкового выражения Сategory."""
+    assert str(category_smartphones) == "Смартфоны, количество продуктов: 22 шт."

@@ -1,4 +1,6 @@
 class ProductIterator:
+    """Класс, с помощью которого можно перебирать товары одной категории."""
+
     def __init__(self, cat_obj):
         self.cat = cat_obj
         self.index = 0

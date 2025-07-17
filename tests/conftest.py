@@ -34,11 +34,6 @@ def category_smartphones(product_xiaomi, product_iphone):
 
 
 @pytest.fixture
-def user_product_list(product_xiaomi, product_iphone):
-    cat = Category("Смартфоны", "Описание категории", [product_xiaomi, product_iphone])
-    return cat
-
-
-@pytest.fixture
-def product_iterator(user_product_list):
-    return ProductIterator(user_product_list)
+def product_iterator(category_smartphones):
+    """Фикстура для создания экземпляра класса ProductIterator."""
+    return ProductIterator(category_smartphones)

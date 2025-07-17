@@ -2,6 +2,8 @@ import pytest
 
 
 def test_product_iterator(product_iterator):  #
+    """Тест для проверки типа класса(iter), начального значения параметра index(0), последовательного вывода
+    товаров в категории и вызова ошибки StopIteration в конце итерации."""
     iter(product_iterator)
     assert product_iterator.index == 0
     assert next(product_iterator).name == "Xiaomi Redmi Note 11"
