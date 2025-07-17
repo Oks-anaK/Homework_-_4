@@ -7,6 +7,12 @@ class Product:
         self.price = price  # сеттер с проверкой
         self.quantity = quantity
 
+    def __str__(self):
+        return f"{self.name}, {self.price} руб. Остаток: {self.quantity} шт."
+
+    def __add__(self, other):
+        return self.quantity * self.price + other.quantity * other.price
+
     @property
     def price(self):
         return self.__price  # возвращаем приватный атрибут
@@ -43,6 +49,11 @@ class Category:
         Category.category_count += 1
         Category.product_count += len(self.__products_list)
 
+    def __str__(self):
+        list_quantity = [product.quantity for product in self.__products_list]
+        sum_quantity = sum(list_quantity)
+        return f"{self.name}, количество продуктов: {sum_quantity} шт."
+
     @property
     def products_list(self):
         # Возвращаем список объектов товаров
@@ -52,7 +63,7 @@ class Category:
     def products(self):
         # Возвращаем строку с описанием всех товаров, каждый с новой строки
         return "".join(
-            f"{product.name}, {product.price} руб. Остаток: {product.quantity} шт.\n"
+            f"{str(product.name)}, {product.price} руб. Остаток: {product.quantity} шт.\n"
             for product in self.__products_list
         )
 

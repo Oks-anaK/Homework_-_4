@@ -42,6 +42,14 @@ def test_product_products_list_property(user_product_list):
     assert user_product_list.products == expected
 
 
+def test_product_str(product_xiaomi):
+    assert str(product_xiaomi) == "Xiaomi Redmi Note 11, 31000.0 руб. Остаток: 14 шт."
+
+
+def test_product__add__(product_xiaomi, product_iphone):
+    assert product_xiaomi + product_iphone== 2114000.0
+
+
 def test_add_product(category_smartphones):
     """Тест добавления товара в категорию и увеличение счётчика продуктов."""
     initial_count = Category.product_count
@@ -82,3 +90,9 @@ def test_classmethod_new_product():
     assert product.description == product_info["description"]
     assert product.price == product_info["price"]
     assert product.quantity == product_info["quantity"]
+
+
+def test_category_str(user_product_list):
+    assert str(user_product_list) == "Смартфоны, количество продуктов: 22 шт."
+
+
