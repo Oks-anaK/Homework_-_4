@@ -47,7 +47,7 @@ def test_product_str(product_xiaomi):
 
 
 def test_product__add__(product_xiaomi, product_iphone):
-    assert product_xiaomi + product_iphone== 2114000.0
+    assert product_xiaomi + product_iphone == 2114000.0
 
 
 def test_add_product(category_smartphones):
@@ -94,5 +94,3 @@ def test_classmethod_new_product():
 
 def test_category_str(user_product_list):
     assert str(user_product_list) == "Смартфоны, количество продуктов: 22 шт."
-
-

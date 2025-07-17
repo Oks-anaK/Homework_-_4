@@ -42,4 +42,3 @@ def user_product_list(product_xiaomi, product_iphone):
 @pytest.fixture
 def product_iterator(user_product_list):
     return ProductIterator(user_product_list)
-
