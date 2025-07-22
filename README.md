@@ -33,6 +33,7 @@ pip install -r requirements.txt
 продуктов: 200 шт." в класс Product и Category соответственно.
 
 В модуле [product_iterator.py](src/product_iterator.py) реализован итератор, который:
+1. Можно перебирать товары одной категории.
 
 
 ## Тестирование:
