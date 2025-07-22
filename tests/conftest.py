@@ -1,6 +1,7 @@
 import pytest
 
 from src.product_categories import Category, Product
+from src.product_iterator import ProductIterator
 
 
 @pytest.fixture(autouse=True)
@@ -33,6 +34,6 @@ def category_smartphones(product_xiaomi, product_iphone):
 
 
 @pytest.fixture
-def user_product_list(product_xiaomi, product_iphone):
-    cat = Category("Смартфоны", "Описание категории", [product_xiaomi, product_iphone])
-    return cat
+def product_iterator(category_smartphones):
+    """Фикстура для создания экземпляра класса ProductIterator."""
+    return ProductIterator(category_smartphones)
