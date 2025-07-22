@@ -1,5 +1,6 @@
 class Product:
-    """Класс для передачи списка товаров."""
+    """Класс для передачи списка товаров. С возможностью подсчета товаров на складе
+    и суммирования с другим товаром типа Product."""
 
     def __init__(self, name, description, price, quantity):
         self.name = name
@@ -11,7 +12,10 @@ class Product:
         return f"{self.name}, {self.price} руб. Остаток: {self.quantity} шт."
 
     def __add__(self, other):
-        return self.quantity * self.price + other.quantity * other.price
+        # Суммируем стоимость продуктов со стоимостью объекта типа Product
+        if type(other) is Product:
+            return self.quantity * self.price + other.quantity * other.price
+        raise TypeError
 
     @property
     def price(self):
@@ -36,7 +40,8 @@ class Product:
 
 
 class Category:
-    """Класс для представления товаров по категории. А также подсчета категорий и товаров."""
+    """Класс для представления товаров по категории. А также подсчета категорий и товаров, добавления продукта
+    в категорию."""
 
     category_count = 0
     product_count = 0
@@ -68,5 +73,9 @@ class Category:
         )
 
     def add_product(self, product):
-        self.__products_list.append(product)
-        Category.product_count += 1
+        # Добавляем объект типа Product в категорию
+        if isinstance(product, Product):
+            self.__products_list.append(product)
+            Category.product_count += 1
+        else:
+            raise TypeError

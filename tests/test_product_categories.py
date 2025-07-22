@@ -52,7 +52,14 @@ def test_product__add__(product_xiaomi, product_iphone):
     assert product_xiaomi + product_iphone == 2114000.0
 
 
-def test_add_product(category_smartphones):
+def test_product__add__error(product_xiaomi):
+    """Тест для проверки возникновения ошибки при суммировании полной стоимости товаров первого типа на складе с
+    объектом, не принадлежащим к классу Product."""
+    with pytest.raises(TypeError):
+        product_xiaomi + [1, 2]
+
+
+def test_category_add_product(category_smartphones):
     """Тест добавления товара в категорию и увеличение счётчика продуктов."""
     initial_count = Category.product_count
     new_product = Product(
@@ -97,3 +104,13 @@ def test_classmethod_new_product():
 def test_category_str(category_smartphones):
     """Тест для проверки вывода строкового выражения Сategory."""
     assert str(category_smartphones) == "Смартфоны, количество продуктов: 22 шт."
+
+
+def test_category_add_product_error(category_smartphones):
+    with pytest.raises(TypeError):
+        category_smartphones.add_product(1)
+
+
+def test_category_add_product_smartphone_1(category_smartphones, product_smartphone_1):
+    category_smartphones.add_product(product_smartphone_1)
+    assert category_smartphones.products_list[-1].name == "Samsung Galaxy S23 Ultra"
