@@ -35,6 +35,10 @@ pip install -r requirements.txt
 В модуле [product_iterator.py](src/product_iterator.py) реализован итератор, который:
 1. Можно перебирать товары одной категории.
 
+В модуле [smartphone_lawngrass.py](src/smartphone_lawngrass.py) созданы 2 класса - Smartphone и LawnGrass, которые 
+являются подклассами Product и:
+1. Содержат дополнительные атрибуты, характерные для категории.
+2. Имеют непересекающиеся методы сложения продуктов категории.
 
 ## Тестирование:
 
