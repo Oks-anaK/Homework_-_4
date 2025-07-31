@@ -59,6 +59,39 @@ def test_product__add__error(product_xiaomi):
         product_xiaomi + [1, 2]
 
 
+def test_middle_quantity(category_smartphones, category_without_price_list):
+    """Тест для проверки правильного расчета среднего ценника товаров в категории."""
+    assert category_smartphones.middle_product_price() == 11
+    assert category_without_price_list.middle_product_price() == 0
+
+
+def test_custom_exception(capsys, category_smartphones):
+    """Тест для проверки правильного расчета товаров в категории, срабатывания выводов (использование класса исключений
+    ZeroQuantityProduct):
+    1) при добавлении в категорию продукта с нулевым количеством товаров;
+    2) при добавлении в категорию продукта с положительным количеством товаров."""
+    assert len(category_smartphones.products_list) == 2
+
+    product_add = Product("Xiaomi Redmi Note 11", "1024GB, Синий", 31000.0, 0)
+    category_smartphones.add_product(product_add)
+    message = capsys.readouterr()
+    assert (
+        message.out.strip().split("\n")[-2]
+        == "Нельзя добавить товар с нулевым количеством."
+    )
+    assert (
+        message.out.strip().split("\n")[-1] == "Обработка добавления товара завершена."
+    )
+
+    product_add = Product("Xiaomi Redmi Note 12", "1024GB, Синий", 35000.0, 6)
+    category_smartphones.add_product(product_add)
+    message = capsys.readouterr()
+    assert message.out.strip().split("\n")[-2] == "Товар успешно добавлен."
+    assert (
+        message.out.strip().split("\n")[-1] == "Обработка добавления товара завершена."
+    )
+
+
 def test_category_add_product(category_smartphones):
     """Тест добавления товара в категорию и увеличение счётчика продуктов."""
     initial_count = Category.product_count
@@ -107,10 +140,12 @@ def test_category_str(category_smartphones):
 
 
 def test_category_add_product_error(category_smartphones):
+    """Тест для проверки вызова ошибки TypeError при неправильном формате ввода."""
     with pytest.raises(TypeError):
         category_smartphones.add_product(1)
 
 
 def test_category_add_product_smartphone_1(category_smartphones, product_smartphone_1):
+    """Тест для проверки правильной работы метода add_product."""
     category_smartphones.add_product(product_smartphone_1)
     assert category_smartphones.products_list[-1].name == "Samsung Galaxy S23 Ultra"

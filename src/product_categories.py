@@ -1,4 +1,5 @@
 from src.base_product import BaseProduct
+from src.exceptions import ZeroQuantityProduct
 from src.print_mixin import PrintMixin
 
 
@@ -10,7 +11,11 @@ class Product(BaseProduct, PrintMixin):
         self.name = name
         self.description = description
         self.price = price  # сеттер с проверкой
+
+        # if quantity > 0:
         self.quantity = quantity
+        # else:
+        #     raise ValueError('Товар с нулевым количеством не может быть добавлен.')
         super().__init__()
 
     def __str__(self):
@@ -69,6 +74,14 @@ class Category:
         # Возвращаем список объектов товаров
         return self.__products_list
 
+    def middle_product_price(self):
+        try:
+            return sum([product.quantity for product in self.__products_list]) / len(
+                self.__products_list
+            )
+        except ZeroDivisionError:
+            return 0
+
     @property
     def products(self):
         # Возвращаем строку с описанием всех товаров, каждый с новой строки
@@ -80,7 +93,18 @@ class Category:
     def add_product(self, product):
         # Добавляем объект типа Product в категорию
         if isinstance(product, Product):
-            self.__products_list.append(product)
-            Category.product_count += 1
+            try:
+                if product.quantity == 0:
+                    raise ZeroQuantityProduct(
+                        "Нельзя добавить товар с нулевым количеством."
+                    )
+            except ZeroQuantityProduct as e:
+                print(str(e))
+            else:
+                self.__products_list.append(product)
+                Category.product_count += 1
+                print("Товар успешно добавлен.")
+            finally:
+                print("Обработка добавления товара завершена.")
         else:
             raise TypeError
